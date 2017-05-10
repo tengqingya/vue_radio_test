@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='jquery-1.11.2.js'></script>
+    <script src='vue.js'></script>
+    <style>
+        body {
+            background: url(3.jpg);
+            margin: 0;
+            padding: 0;
+        }
+
+        #d {
+            width: 100%;
+            height: 70px;
+            background: black;
+        }
+
+        .box {
+            width: 500px;
+            height: 350px;
+            margin: 100px auto;
+
+        }
+
+        .ph {
+            width: 500px;
+            height: 315px;
+        }
+
+        .jpg1 {
+            width: 500px;
+        }
+
+        .btn {
+            background: pink;
+            border: none;
+            border-radius: 10px;
+            margin: 0 5px;
+            color: deeppink;
+        }
+
+        .tm {
+            opacity: 0.5;
+        }
+
+        .hsl {
+            filter: sepia(1);
+        }
+
+        .bhd {
+            filter: saturate(0.3);
+        }
+
+        .sxfz {
+            filter: hue-rotate(180deg);
+        }
+
+        .fs {
+            filter: invert(1);
+        }
+
+        .ld {
+            filter: brightness(0.8);
+        }
+
+        .db {
+            filter: contrast(2);
+        }
+
+        .mh {
+            filter: blur(3px);
+        }
+        #img{
+            width: 500px;
+        }
+        .img-list {
+            width: 150px;
+            position: absolute;
+            right: 0;
+            top: 100px;
+        }
+
+        .img-list img {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+<!-- <div id="d">
+
+</div> -->
+<div class="box">
+    <div class="ph">
+        <img src=" timg.jpg" class="jpg1" id="img">
+    </div>
+    透明度:<input type="range">
+    <button class='btn' id='tm'>透明度</button><br>
+    褐色:<input type="range">
+    <button class='btn' id='hsl'>褐色</button><br>
+    饱和度:<input type="range">
+    <button class='btn' id='bhd'>饱和度</button><br>
+    色相旋转:<input type="range">
+    <button class='btn' id='sxfz'>色相旋转</button><br>
+    反色:<input type="range">
+    <button class='btn' id='fs'>反色</button><br>
+    亮度:<input type="range">
+    <button class='btn' id='ld'>亮度</button><br>
+    对比度:<input type="range">
+    <button class='btn' id='db'>对比度</button><br>
+    模糊:<input type="range">
+    <button class='btn' id='mh'>模糊</button><br>
+
+
+
+
+
+
+
+</div>
+<div class="img-list">
+
+
+    <div id="myDiv">
+        <img :src="changePic" class="jpg1">
+
+        <img :src="pics[1]" alt="">
+        <img :src="pics[2]" alt="">
+        <img :src="pics[3]" alt="">
+        <!--radio点击-->
+        <label>1</label><input type="radio" v-model="radioData" name="myradio" value="1">
+        <label>2</label><input type="radio" v-model="radioData" name="myradio" value="2">
+        <label>3</label><input type="radio" v-model="radioData" name="myradio" value="3">
+        <!--radio点击-->
+        <p></p>
+        <span>radioData: {{ radioData }}</span>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        /*$("div button").each(function () {
+            $(this).click(function () {
+                var idStyle = $(this).attr("id");//获取id的值
+                $(this).addClass(idStyle).siblings().attr('class', 'btn');
+                $('#img').attr('class', idStyle);
+            });
+        });*/
+//        $("button").on("click",function (e) {
+//            e.stopPropagation();
+//            var idStyle = $(this).attr("id");
+//            $('#img').attr('class', idStyle);
+//        });
+//
+//
+//        $(".img-list img").on("click",function (e) {
+//            e.stopPropagation();
+//            $("#img")[0].className = "";
+//            var thisSrc = $(this).attr("src");
+//            $(this).prop("src",$("#img").attr("src"));
+//            $("#img").prop("src",thisSrc);
+//        });
+
+        var vm = new Vue({
+            el: "#myDiv",
+            data: function () {
+                return {
+                    radioData: 1,
+                    pic0:"timg.jpg",
+                    pics:["timg.jpg","NatGeo03.jpg","NatGeo08.jpg","NatGeo12.jpg"]
+                }
+            },
+            computed: {
+                changePic(){
+                    //交换两个pic
+                    var temp = this.pics[this.radioData]
+                    this.pics[this.radioData] = this.pic0
+                    this.pic0 = temp
+                    return this.pic0
+                }
+            },
+            methods: {
+            }
+        });
+        //	$(function(){
+        //      $('#tm').on('click',function(){
+        //       jpg.style.opacity=0.5
+        //       })
+        //      $('#hs').click(function(){
+        //      	$('hs').removeClass('hsl')
+        //      	$(this).addClass('hsl')
+        //      	$('img').addClass('hsl')
+        //
+        //      })
+        //       $('#bhd').click(function(){
+        //      	$('bhd').removeClass('bhd')
+        //           $(this).addClass('bhd')
+        //      	$('img').addClass('bhd')
+        //      	$('#bhd').stop()
+        //      })
+        //       $('#sxfz').click(function(){
+        //      	$('sxfz').removeClass('sxfz')
+        //           $(this).addClass('sxfz')
+        //
+        //      	$('img').addClass('sxfz')
+        //      	$('#sxfz').stop()
+        //      })
+        //      $('#fs').click(function(){
+        //      	$('fs').removeClass('fs')
+        //      	$(this).addClass('fs')
+        //      	$('img').addClass('fs')
+        //      })
+        //      $('#ld').click(function(){
+        //      	$('ld').removeClass('ld')
+        //          $(this).addClass('ld')
+        //
+        //      	$('img').addClass('ld')
+        //      })
+        //      $('#db').click(function(){
+        //     	$('db').removeClass('db')
+        //          $(this).addClass('db')
+        //      	$('img').addClass('db')
+        //      })
+        //      $('#mh').click(function(){
+        //     	$('mh').removeClass('mh')
+        //          $(this).addClass('mh')
+        //      	$('img').addClass('mh')
+        //      })
+        //	})
+    });
+
+</script>
+
+</body>
+</html>
